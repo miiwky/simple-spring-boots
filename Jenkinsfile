@@ -41,7 +41,10 @@ pipeline {
         }
         stage('Deployment') {
             steps {
-                sh 'kubectl apply -f deployment.yml';
+                
+                sshagent (credentials: ['deploy-dev']) {
+                    sh 'ssh -o StrictHostKeyChecking=no -l root@128.199.66.160 uname -a'
+                }
             }
         }
     }
